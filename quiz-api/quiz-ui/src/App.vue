@@ -57,7 +57,7 @@ nav a:first-of-type {
 @media (min-width: 1024px) {
   header {
     display: flex;
-    place-items: center;
+    place-items: left;
     padding-right: calc(var(--section-gap) / 2);
   }
 
@@ -73,7 +73,7 @@ nav a:first-of-type {
 
   nav {
     text-align: left;
-    margin-left: -1rem;
+    margin-left: -2rem;
     font-size: 1rem;
 
     padding: 1rem 0;

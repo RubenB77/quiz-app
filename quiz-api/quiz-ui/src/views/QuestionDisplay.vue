@@ -1,10 +1,19 @@
 <template>
   <div>
     <h2>{{ question.title }}</h2>
-    <img v-if="question.image" :src="question.image" />
-    <p v-html="question.text"></p>
-    <div v-for="(answer, index) in question.possibleAnswers" :key="index">
-      <button @click="$emit('answer-selected', index)">{{ answer.text }}</button>
+    <div class="question-image-wrapper">
+      <img v-if="question.image" :src="question.image" class="question-image" />
+    </div>
+    <p class="question-text" v-html="question.text"></p>
+    <div class="answer-buttons">
+      <button
+        v-for="(answer, index) in question.possibleAnswers"
+        :key="index"
+        @click="$emit('answer-selected', index)"
+        class="answer-button"
+      >
+        {{ answer.text }}
+      </button>
     </div>
   </div>
 </template>
@@ -14,12 +23,49 @@ export default {
   props: {
     question: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
 <style scoped>
-/* Ajoutez ici le style de votre composant */
+.question-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.question-image {
+  max-width: 220px; /* Ajustez la taille de l'image selon vos besoins */
+}
+
+.question-text {
+  font-size: 20px; /* Ajustez la taille du texte selon vos besoins */
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.answer-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.answer-button {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.answer-button:hover {
+  background-color: #e0e0e0;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <h1 class="page-title">Bienvenue sur la page d'accueil</h1>
+    <h1 class="page-title">Bienvenue sur Quizzo</h1>
     <div class="score-container">
       <h2 class="score-heading">Meilleurs scores :</h2>
       <ul class="score-list">

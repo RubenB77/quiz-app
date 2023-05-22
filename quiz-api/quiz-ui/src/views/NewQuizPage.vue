@@ -4,7 +4,7 @@
     
     <form @submit.prevent="launchNewQuiz">
       <div class="mb-3">
-        <label for="playerName" class="form-label">Nom du joueur :</label>
+        <label for="playerName" class="form-label">Entrez votre nom :</label>
         <input type="text" class="form-control" id="playerName" v-model="username">
       </div>
       <button type="submit" class="btn btn-primary">Commencer le quiz</button>
@@ -43,6 +43,7 @@ export default {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center; 
     flex-direction: column;
   }
   
@@ -56,3 +57,4 @@ export default {
   }
 }
 </style>
+

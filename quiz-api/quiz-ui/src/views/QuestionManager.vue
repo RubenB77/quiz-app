@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
-    <QuestionDisplay
-      v-if="currentQuestion"
-      :question="currentQuestion"
-      @answer-selected="answerClickedHandler"
-    />
+  <div class="page-wrapper">
+    <h1 class="question-indicator">Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
+    <div class="content-wrapper">
+      <QuestionDisplay
+        v-if="currentQuestion"
+        :question="currentQuestion"
+        @answer-selected="answerClickedHandler"
+      />
+    </div>
   </div>
 </template>
 
@@ -35,8 +37,6 @@ export default {
       }
     } catch (error) {
       console.error(error);
-      // Handle the error of fetching the quiz info
-      // You can show an error message or redirect to an error page, for instance
     }
   },
   methods: {
@@ -46,8 +46,6 @@ export default {
         this.currentQuestion = data;
       } catch (error) {
         console.error(error);
-        // Handle the error of fetching the question
-        // You can show an error message or redirect to an error page, for instance
       }
     },
     answerClickedHandler(answerIndex) {
@@ -73,8 +71,6 @@ export default {
         this.$router.push("/end-quiz");
       } catch (error) {
         console.error(error);
-        // Handle the error of submitting participation
-        // You can show an error message or redirect to an error page, for instance
       }
     },
   },
@@ -82,5 +78,31 @@ export default {
 </script>
 
 <style scoped>
-/* Add your component style here */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.question-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.content-wrapper img {
+  max-width: 100%;
+  max-height: 400px;
+}
+
+/* Ajoutez ici le style supplémentaire pour votre composant */
 </style>
