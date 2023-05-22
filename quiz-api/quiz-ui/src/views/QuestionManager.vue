@@ -104,5 +104,4 @@ export default {
   max-height: 400px;
 }
 
-/* Ajoutez ici le style supplémentaire pour votre composant */
 </style>

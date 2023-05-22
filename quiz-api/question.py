@@ -159,19 +159,17 @@ def UpdQuestionByID(input,pId):
 
     
 def FillPositionGap(position_to_fill, conn):
-    # Vérifier si la position à remplir est valide
+
     question_to_fill = GetQuestionbyPos(position_to_fill)
     if question_to_fill is None:
         return
-    # Obtenir la position maximale existante
+
     conn.execute("SELECT MAX(position) FROM questions")
     max_position = conn.fetchone()[0]
 
-    # Mettre à jour les positions des questions après le trou
     for position in range(position_to_fill + 1, max_position + 1):
         conn.execute(f"UPDATE questions SET position = {position - 1} WHERE position = {position}")
 
-    # Mettre à jour la question à la position à remplir
     conn.execute(f"UPDATE questions SET position = {max_position} WHERE position IS NULL")
 
 
@@ -275,12 +273,12 @@ def DeleteParticipations():
 def calculate_score(answers):
     database = sql.CreateConnection()
 
-    # Récupérer les questions et réponses associées
+
     database.execute("SELECT * FROM questions")
     questions = database.fetchall()
     id=0
     score =0
-    # Créer un dictionnaire pour stocker les réponses correctes de chaque question
+
     for question in questions:
         id=id+1
         database.execute("SELECT * FROM answers WHERE idQuestion=?", (id,))

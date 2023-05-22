@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path: '/end-quiz',
       name: 'EndQuiz',
-      component: QuizResultPage, // Remplacez "EndQuizComponent" par le composant réel utilisé pour la fin du quiz
+      component: QuizResultPage, 
     },
   ]
 })

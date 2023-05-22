@@ -48,8 +48,6 @@ export default {
       const response =this.call("post", "participations",data);
       console.log(response)
       return response;
-      //const response = await axios.post('/participations', data);
-      return response.data;
     } catch (error) {
       console.error('Error submitting participation:', error);
       throw error;

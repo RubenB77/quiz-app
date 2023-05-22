@@ -37,11 +37,11 @@ export default {
 }
 
 .question-image {
-  max-width: 220px; /* Ajustez la taille de l'image selon vos besoins */
+  max-width: 220px; 
 }
 
 .question-text {
-  font-size: 20px; /* Ajustez la taille du texte selon vos besoins */
+  font-size: 20px; 
   line-height: 1.5;
   margin-bottom: 10px;
 }
