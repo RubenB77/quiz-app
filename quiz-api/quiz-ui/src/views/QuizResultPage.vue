@@ -12,17 +12,19 @@
 </template>
 
 <script>
+import ParticipationStorageService from "@/services/ParticipationStorageService";
+
 export default {
   data() {
     return {
-      finalScore: null
-    }
+      finalScore: null,
+    };
   },
   created() {
-    this.finalScore = localStorage.getItem('participationScore')
-    localStorage.removeItem('participationScore')
-  }
-}
+    this.finalScore = ParticipationStorageService.getParticipationScore();
+    ParticipationStorageService.clear();
+  },
+};
 </script>
 
 <style scoped>

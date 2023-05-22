@@ -23,13 +23,19 @@ export default {
   },
   methods: {
     async launchNewQuiz() {
+      if (!this.username) {
+        console.error('Username is not defined');
+        return;
+      }
       console.log("Launch new quiz with", this.username);
       ParticipationStorageService.savePlayerName(this.username);
+      console.log('Router:', this.$router);
       this.$router.push('/questions');
     },
   },
 };
 </script>
+
 
 <style>
 @media (min-width: 1024px) {

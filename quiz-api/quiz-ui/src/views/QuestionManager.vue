@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import QuizApiService from "@/services/QuizApiService";
 import QuestionDisplay from "./QuestionDisplay.vue";
+import ParticipationStorageService from "@/services/ParticipationStorageService";
 
 export default {
   components: {
@@ -26,41 +27,60 @@ export default {
     };
   },
   async created() {
-    this.totalNumberOfQuestions = await this.getNumberOfQuestions();
-    if (this.totalNumberOfQuestions > 0) {
-      await this.loadQuestionByPosition(this.currentQuestionPosition);
+    try {
+      const { data } = await QuizApiService.getQuizInfo();
+      this.totalNumberOfQuestions = data.size;
+      if (this.totalNumberOfQuestions > 0) {
+        await this.loadQuestionByPosition(this.currentQuestionPosition);
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle the error of fetching the quiz info
+      // You can show an error message or redirect to an error page, for instance
     }
   },
   methods: {
     async loadQuestionByPosition(position) {
-  try {
-    const response = await axios.get(`http://localhost:5000/api/questions/${position}`);
-    this.currentQuestion = response.data;
-  } catch (error) {
-    console.error(error);
-    // Traitez l'erreur de récupération de la question
-    // Par exemple, vous pouvez afficher un message d'erreur ou rediriger vers une page d'erreur
-  }
-},
-
-    async answerClickedHandler(answerIndex) {
+      try {
+        const { data } = await QuizApiService.getQuestion(position);
+        this.currentQuestion = data;
+      } catch (error) {
+        console.error(error);
+        // Handle the error of fetching the question
+        // You can show an error message or redirect to an error page, for instance
+      }
+    },
+    answerClickedHandler(answerIndex) {
       this.possibleAnswers.push(answerIndex);
 
       if (this.currentQuestionPosition < this.totalNumberOfQuestions) {
         this.currentQuestionPosition++;
-        await this.loadQuestionByPosition(this.currentQuestionPosition);
+        this.loadQuestionByPosition(this.currentQuestionPosition);
       } else {
-        this.$router.push("/end-quiz"); // Redirige vers la page de fin du quiz
+        this.calculateFinalScore();
       }
     },
-    async getNumberOfQuestions() {
-  const response = await axios.get("http://localhost:5000/api/questions/count");
-  return response.data.count;
-},
+    async calculateFinalScore() {
+      try {
+        const playerName = ParticipationStorageService.getPlayerName();
+        const participationScore = this.possibleAnswers.map(answer => answer + 1);
+
+        const { data } = await QuizApiService.submitParticipation(playerName, participationScore);
+
+        const finalScore = data.score;
+        ParticipationStorageService.saveParticipationScore(finalScore);
+
+        this.$router.push("/end-quiz");
+      } catch (error) {
+        console.error(error);
+        // Handle the error of submitting participation
+        // You can show an error message or redirect to an error page, for instance
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-/* Ajoutez ici le style de votre composant */
+/* Add your component style here */
 </style>

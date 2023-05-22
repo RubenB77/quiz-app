@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/HomePage.vue'
 import NewQuizPage from '@/views/NewQuizPage.vue'
 import QuestionsPage from '@/views/QuestionPage.vue'
+import QuizResultPage from '@/views/QuizResultPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,7 +22,11 @@ const router = createRouter({
       name: "QuestionPage",
       component: QuestionsPage,
     },
-    // ... autres routes
+    {
+      path: '/end-quiz',
+      name: 'EndQuiz',
+      component: QuizResultPage, // Remplacez "EndQuizComponent" par le composant réel utilisé pour la fin du quiz
+    },
   ]
 })
 

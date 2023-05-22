@@ -27,6 +27,12 @@ def hello_world():
 def GetQuizInfo():
     return jsonify({"size": GetSizeQuestions(), "scores": GetScores()}), 200
 
+@app.route('/scores', methods=['GET'])
+def GetScoresA():
+    scores = GetScores()  
+    return jsonify(scores), 200
+
+
 @app.route('/login', methods=['POST'])
 def Login():
     payload = request.get_json()
@@ -57,6 +63,11 @@ def AddQuestion():
         return jsonify(response), 200
     else:
         return 'Unauthorized', 401
+    
+@app.route('/questions/count', methods=['GET'])
+def GetQuestionCount():
+    return jsonify({"count": GetSizeQuestions()}), 200
+
 
 @app.route('/questions', methods=['GET'])
 def PosQestion():

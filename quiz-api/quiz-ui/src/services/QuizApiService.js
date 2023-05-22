@@ -31,9 +31,29 @@ export default {
     return this.call("get", "quiz-info");
   },
   async getQuestion(position) {
-    // Non implémenté
+    return this.call("get", `questions/${position}`)
   },
   async getScores() {
     return this.call("get", "scores");
   },
+  async submitParticipation(playerName, answers) {
+    const answersArray = Object.values(answers);
+    const data = {
+      "playerName": playerName,
+      "answers": answersArray
+  };
+    
+    console.log('Data to be sent:', data);
+    try {
+      const response =this.call("post", "participations",data);
+      console.log(response)
+      return response;
+      //const response = await axios.post('/participations', data);
+      return response.data;
+    } catch (error) {
+      console.error('Error submitting participation:', error);
+      throw error;
+    }
+  },
+  
 };
