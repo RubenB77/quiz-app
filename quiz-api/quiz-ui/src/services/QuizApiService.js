@@ -33,8 +33,21 @@ export default {
   async getQuestion(position) {
     return this.call("get", `questions/${position}`)
   },
+  async getAllQuestions(token) {
+    console.log(this.call("get", "questions/all",null,token))
+    return this.call("get", "questions/all",null,token);
+  },
   async getScores() {
     return this.call("get", "scores");
+  },
+  async DeleteAllQuestions(token) {
+    return this.call("delete", "questions/all",null,token);
+  },
+  async DeleteParticipations(token) {
+    return this.call("delete", "participations/all",null,token);
+  },
+  async DeleteQuestion(id,token) {
+    return this.call("delete", "questions/"+id,null,token);
   },
   async submitParticipation(playerName, answers) {
     const answersArray = Object.values(answers);
@@ -50,6 +63,19 @@ export default {
       return response;
     } catch (error) {
       console.error('Error submitting participation:', error);
+      throw error;
+    }
+  },
+  async adminLogin(pPassword) {
+    const data = {
+      "password": pPassword,
+    };
+
+    try {
+      const response = await this.call("post", "login", data);
+      return response;
+    } catch (error) {
+      console.error("Error logging in:", error);
       throw error;
     }
   },

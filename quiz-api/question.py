@@ -299,3 +299,11 @@ def GetScores():
         response.append({"playerName": participant[1],"score":participant[3]})
     database.close()
     return response
+
+def GetAllQuestions():
+    i=0
+    response =[]
+    while (i<GetSizeQuestions()) :
+        i=i+1
+        response.append(GetQuestionbyID(i))
+    return response

@@ -14,6 +14,7 @@ from question import (
     CreateParticipation,
     DeleteParticipations,
     GetScores,
+    GetAllQuestions,
 )
 
 app = Flask(__name__)
@@ -82,6 +83,14 @@ def DelAllQuestions():
     if checkAuth():
         DeleteQuestions()
         return 'All Questions Deleted', 204
+    else:
+        return 'Unauthorized', 401
+    
+@app.route('/questions/all', methods=['GET'])
+def GetallQuestions():
+    if checkAuth():
+        response = GetAllQuestions()
+        return response, 200
     else:
         return 'Unauthorized', 401
 
