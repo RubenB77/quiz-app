@@ -5,7 +5,7 @@
       <h2 class="score-heading">Meilleurs scores :</h2>
       <ul class="score-list">
         <li v-for="score in registeredScores" :key="score.id" class="score-item">
-          {{ score.playerName }} - {{ score.score }}
+          <span class="player-name">{{ score.playerName }} -</span> <span class="player-score">{{ score.score }}</span>
         </li>
       </ul>
     </div>
@@ -66,6 +66,16 @@ export default {
   background-color: #f5f5f5;
   padding: 10px;
   border-radius: 5px;
+}
+
+.player-name {
+  color: gray;
+  font-weight: bold;
+}
+
+.player-score {
+  color: gray;
+  font-weight: bold;
 }
 
 .start-quiz-link {
