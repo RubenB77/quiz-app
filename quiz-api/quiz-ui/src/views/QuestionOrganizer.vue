@@ -12,14 +12,15 @@
           </div>
         </div>
         <div>
-          <button @click="editQuestion(question.id)">Modifier</button>
+          <button @click="editQuestion(question.id)" class="edit-button">Modifier</button>
           <button @click="deleteQuestion(question.id)">Supprimer</button>
         </div>
       </div>
     </div>
     <div class="button-container">
-      <button @click="deleteAllQuestions">Supprimer toutes les questions</button>
       <button @click="addQuestion">Ajouter une question</button>
+      <button v-if="questions.length > 0" @click="deleteAllQuestions">Supprimer toutes les questions</button>
+      <button class="logout-button" @click="logout">Déconnexion</button>
     </div>
   </div>
 </template>
@@ -35,19 +36,23 @@ export default {
     };
   },
   methods: {
-    fetchQuestions() {
-      const token = AdminStorageService.getAdminToken();
-      QuizApiService.getAllQuestions(token)
-        .then(response => {
-          if (response.data && Array.isArray(response.data)) {
-            this.questions = response.data;
-          } else {
-            this.questions = [];
-          }
-        })
-        .catch(error => {
-          console.error("Error fetching questions:", error);
-        });
+    async fetchQuestions() {
+      try {
+        const token = AdminStorageService.getAdminToken();
+        const response = await QuizApiService.getAllQuestions(token);
+        console.log(response);
+        if (Array.isArray(response.data)) {
+          this.questions = response.data.map((question) => ({
+            id: question[0],
+            position: question[1],
+            title: question[2],
+          }));
+        } else {
+          this.questions = [];
+        }
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
     },
     editQuestion(questionId) {
       // Rediriger vers la page de modification de question en passant l'ID de la question en paramètre
@@ -55,7 +60,7 @@ export default {
     },
     deleteQuestion(questionId) {
       const token = AdminStorageService.getAdminToken();
-      QuizApiService.DeleteQuestion(questionId, token)
+      QuizApiService.deleteQuestion(questionId, token)
         .then(() => {
           this.fetchQuestions();
         })
@@ -76,6 +81,10 @@ export default {
     addQuestion() {
       // Rediriger vers la page d'ajout de question
       // this.$router.push({ name: "AddQuestion" });
+    },
+    logout() {
+      AdminStorageService.clearToken();
+      this.$router.push({ name: "LoginPage" });
     },
   },
   created() {
@@ -128,6 +137,9 @@ export default {
 
 .button-container {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 button {
@@ -136,11 +148,18 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 0 10px;
 }
 
 button:hover {
   background-color: #e0e0e0;
 }
-</style>
 
+.logout-button {
+  background-color: red;
+  color: white;
+}
+
+.edit-button {
+  margin-right: 5px;
+}
+</style>

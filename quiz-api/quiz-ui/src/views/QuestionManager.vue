@@ -1,10 +1,10 @@
 <template>
   <div class="page-wrapper">
-    <h1 class="question-indicator">Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
     <div class="content-wrapper">
       <QuestionDisplay
         v-if="currentQuestion"
         :question="currentQuestion"
+        :totalNumberOfQuestions="totalNumberOfQuestions"
         @answer-selected="answerClickedHandler"
       />
     </div>
@@ -48,12 +48,12 @@ export default {
         console.error(error);
       }
     },
-    answerClickedHandler(answerIndex) {
+    async answerClickedHandler(answerIndex) {
       this.possibleAnswers.push(answerIndex);
 
       if (this.currentQuestionPosition < this.totalNumberOfQuestions) {
         this.currentQuestionPosition++;
-        this.loadQuestionByPosition(this.currentQuestionPosition);
+        await this.loadQuestionByPosition(this.currentQuestionPosition);
       } else {
         this.calculateFinalScore();
       }

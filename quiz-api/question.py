@@ -272,21 +272,16 @@ def DeleteParticipations():
 
 def calculate_score(answers):
     database = sql.CreateConnection()
-
-
-    database.execute("SELECT * FROM questions")
+    database.execute("SELECT * FROM questions ORDER BY position ")
     questions = database.fetchall()
-    id=0
+    pos=0
     score =0
-
     for question in questions:
-        id=id+1
-        database.execute("SELECT * FROM answers WHERE idQuestion=?", (id,))
+        pos=pos+1
+        database.execute("SELECT * FROM answers WHERE idQuestion=?", (question[0],))
         fetchanswers =database.fetchall()
-        print(fetchanswers[answers[id-1]-1][3])
-        if fetchanswers[answers[id-1]-1][3]==True:
+        if fetchanswers[answers[pos-1]-1][3]==True:
             score = score+1
-            print(score)
     database.close()
     return score
 
@@ -301,9 +296,8 @@ def GetScores():
     return response
 
 def GetAllQuestions():
-    i=0
-    response =[]
-    while (i<GetSizeQuestions()) :
-        i=i+1
-        response.append(GetQuestionbyID(i))
+    database = sql.CreateConnection()
+    database.execute("SELECT * FROM questions ORDER BY position ")
+    response = database.fetchall() 
+    database.close()
     return response

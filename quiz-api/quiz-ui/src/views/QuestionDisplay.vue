@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="question-indicator">Question {{ question.position }} / {{ totalNumberOfQuestions }}</h1>
     <h2>{{ question.title }}</h2>
     <div class="question-image-wrapper">
       <img v-if="question.image" :src="question.image" class="question-image" />
@@ -23,6 +24,10 @@ export default {
   props: {
     question: {
       type: Object,
+      required: true,
+    },
+    totalNumberOfQuestions: {
+      type: Number,
       required: true,
     },
   },

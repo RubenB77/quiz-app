@@ -72,7 +72,9 @@ def GetQuestionCount():
 
 @app.route('/questions', methods=['GET'])
 def PosQestion():
+    
     position = request.args.get('position')
+    print(position)
     response = GetQuestionbyPosJSON(position)
     if response == None:
         return 'No question with this pos', 404

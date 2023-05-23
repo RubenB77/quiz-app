@@ -40,7 +40,7 @@ export default {
 <style>
 @media (min-width: 1024px) {
   .new-quiz-page {
-    min-height: 100vh;
+    min-height: 10vh;
     display: flex;
     align-items: center;
     justify-content: center; 

@@ -30,23 +30,23 @@ export default {
   async getQuizInfo() {
     return this.call("get", "quiz-info");
   },
-  async getQuestion(position) {
-    return this.call("get", `questions/${position}`)
+  async getQuestion(position) 
+  {
+    return this.call("get", "questions?position="+position)
   },
   async getAllQuestions(token) {
-    console.log(this.call("get", "questions/all",null,token))
     return this.call("get", "questions/all",null,token);
   },
   async getScores() {
     return this.call("get", "scores");
   },
-  async DeleteAllQuestions(token) {
+  async deleteAllQuestions(token) {
     return this.call("delete", "questions/all",null,token);
   },
   async DeleteParticipations(token) {
     return this.call("delete", "participations/all",null,token);
   },
-  async DeleteQuestion(id,token) {
+  async deleteQuestion(id,token) {
     return this.call("delete", "questions/"+id,null,token);
   },
   async submitParticipation(playerName, answers) {
@@ -55,7 +55,6 @@ export default {
       "playerName": playerName,
       "answers": answersArray
   };
-    
     console.log('Data to be sent:', data);
     try {
       const response =this.call("post", "participations",data);
