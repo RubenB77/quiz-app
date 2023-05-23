@@ -4,10 +4,9 @@ export default {
   },
   saveAdminToken(token) {
     window.localStorage.setItem("token", token);
-    // Supprimer le token après une heure
     setTimeout(() => {
       this.clearToken();
-    }, 60 * 60 * 1000); // 1 heure en millisecondes
+    }, 60 * 60 * 1000); 
   },
   getAdminToken() {
     return window.localStorage.getItem("token");

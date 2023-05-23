@@ -96,6 +96,7 @@ def GetallQuestions():
     else:
         return 'Unauthorized', 401
 
+
 @app.route('/questions/<questionId>', methods=['GET'])
 def GetQuestionById(questionId):
     response = GetQuestionbyID(questionId)

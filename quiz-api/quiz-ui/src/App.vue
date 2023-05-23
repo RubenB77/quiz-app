@@ -1,40 +1,34 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
+  <header class="header-container">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/start-new-quiz-page">New Quiz </RouterLink>
-        <RouterLink to="/login-page">Admin Page </RouterLink>
+        <RouterLink to="/start-new-quiz-page">New Quiz</RouterLink>
+        <RouterLink to="/login-page">Admin Page</RouterLink>
       </nav>
-    </div>
   </header>
 
   <RouterView />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 nav {
-  width: 50%;
   font-size: 12px;
-  text-align: center;
-  margin-top: 1rem;
+  text-align: left;
 }
 
 nav a.router-link-exact-active {
@@ -46,39 +40,27 @@ nav a.router-link-exact-active:hover {
 }
 
 nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  display: block;
+  padding: 10px 0;
+  text-decoration: none;
+  margin-bottom: 10px; 
+  border-bottom: 1px solid #e0e0e0; 
+  text-align: center; 
 }
 
 nav a:first-of-type {
-  border: 0;
+  margin-top: 10px; 
+  border-top: 1px solid #e0e0e0; 
 }
 
 @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: left;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .header-container {
+    width: 250px; 
+    padding-right: 40px; 
   }
 
   nav {
-    text-align: left;
-    margin-left: -2rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+    font-size: 14px; 
   }
 }
 </style>

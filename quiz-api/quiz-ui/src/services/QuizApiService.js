@@ -34,11 +34,21 @@ export default {
   {
     return this.call("get", "questions?position="+position)
   },
+  async getQuestionByid(position) 
+  {
+    return this.call("get", "questions/"+position)
+  },
   async getAllQuestions(token) {
     return this.call("get", "questions/all",null,token);
   },
   async getScores() {
     return this.call("get", "scores");
+  },
+  async addQuestion(data,token){
+    return this.call("post", "questions",data,token);
+  },
+  async updtquestion(id,token,data){
+    return this.call("put","questions/"+id,data,token)
   },
   async deleteAllQuestions(token) {
     return this.call("delete", "questions/all",null,token);

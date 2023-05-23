@@ -6,7 +6,8 @@ import QuizResultPage from '@/views/QuizResultPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import OrgaPage from '@/views/QuestionOrganizer.vue'
 import AdminPage from '@/views/AdminPage.vue'
-
+import ModifyQuestion from '@/views/ModifyQuestion.vue';
+import AddQuestion from '@/views/AddQuestionPage.vue';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -15,6 +16,18 @@ const router = createRouter({
       name: "HomePage",
       component: HomePage,
     },
+    {
+      path: "/add-question",
+      name: "AddQuestionPage",
+      component: AddQuestion,
+    },
+    {
+      path: '/modify-question/:questionId',
+      name: 'ModifyQuestion',
+      component: ModifyQuestion,
+      props: route => ({
+        questionId: route.params.questionId,
+      }),},
     {
       path: "/start-new-quiz-page",
       name: "NewQuizPage",

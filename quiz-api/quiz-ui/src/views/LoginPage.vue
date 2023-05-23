@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <h1>Login</h1>
-    <form @submit.prevent="login">
+    <form @submit.prevent="login" class="form-container">
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" v-model="password" required>
@@ -10,9 +10,8 @@
         <button type="submit">Login</button>
       </div>
     </form>
-    <div v-if="loggedIn">
+    <div v-if="loggedIn" class="success-message">
       <h2>Login successful</h2>
-      <!-- Add your admin content here -->
       <AdminPage />
     </div>
     <div v-if="errorMessage" class="error-message">
@@ -38,14 +37,12 @@ export default {
     async login() {
       try {
         const response = await QuizApiService.adminLogin(this.password);
-
-        // Perform additional checks if necessary
         if (response.status === 200) {
           const token = response.data.token;
-          AdminStorageService.saveAdminToken(token); // Store the token
+          AdminStorageService.saveAdminToken(token); 
 
           this.loggedIn = true;
-          this.$router.push({ name: "AdminPage" }); // Redirect to the AdminPage
+          this.$router.push({ name: "AdminPage" }); 
         } else {
           this.errorMessage = "Invalid password";
         }
@@ -59,11 +56,10 @@ export default {
     AdminPage,
   },
   created() {
-    const token = AdminStorageService.getAdminToken(); // Get the stored token
+    const token = AdminStorageService.getAdminToken(); 
     if (token) {
-      // Perform token validation if necessary
       this.loggedIn = true;
-      this.$router.push({ name: "AdminPage" }); // Redirect to the AdminPage
+      this.$router.push({ name: "AdminPage" }); 
     }
   },
 };
@@ -77,9 +73,11 @@ export default {
   justify-content: center;
   text-align: center;
   padding: 20px;
+  height: 100vh; 
+  box-sizing: border-box;
 }
 
-form {
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,6 +111,10 @@ button:hover {
 
 .error-message {
   color: red;
+  margin-top: 10px;
+}
+
+.success-message {
   margin-top: 10px;
 }
 </style>

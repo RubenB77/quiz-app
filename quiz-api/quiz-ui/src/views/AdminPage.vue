@@ -17,8 +17,8 @@ import QuizApiService from "@/services/QuizApiService";
 export default {
   methods: {
     logout() {
-      AdminStorageService.clearToken(); // Supprime le token d'authentification
-      this.$router.push("/"); // Redirige l'utilisateur vers la page d'accueil
+      AdminStorageService.clearToken(); 
+      this.$router.push("/"); 
     },
     deleteParticipations() {
       QuizApiService.DeleteParticipations(AdminStorageService.getAdminToken());
@@ -39,10 +39,12 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .button-space {
   height: 10px;
+  
 }
 
 button {
@@ -57,6 +59,7 @@ button {
 
 button:hover {
   background-color: #e0e0e0;
+  
 }
 
 .logout-button {
@@ -72,6 +75,7 @@ button:hover {
 
 .logout-button:hover {
   background-color: #c50000;
+  
 }
 
 .manage-questions-link {

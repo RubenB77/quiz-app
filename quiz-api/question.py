@@ -125,7 +125,6 @@ def GetQuestionbyID(pId):
 def UpdQuestionByID(input,pId):
     db = sql.CreateConnection()
     db.execute(f"SELECT position FROM questions WHERE id = {pId}")
-    pos = db.fetchone()[0]
 
     db.execute("SELECT * FROM questions WHERE id=?", (pId,))
     data = db.fetchone()

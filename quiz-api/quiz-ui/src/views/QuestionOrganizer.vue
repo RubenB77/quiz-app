@@ -40,7 +40,6 @@ export default {
       try {
         const token = AdminStorageService.getAdminToken();
         const response = await QuizApiService.getAllQuestions(token);
-        console.log(response);
         if (Array.isArray(response.data)) {
           this.questions = response.data.map((question) => ({
             id: question[0],
@@ -55,9 +54,10 @@ export default {
       }
     },
     editQuestion(questionId) {
-      // Rediriger vers la page de modification de question en passant l'ID de la question en paramètre
-      // this.$router.push({ name: "EditQuestion", params: { id: questionId } });
-    },
+      console.log("aaaa"+questionId);
+  this.$router.push({ name: 'ModifyQuestion', params: { questionId: questionId } });
+},
+
     deleteQuestion(questionId) {
       const token = AdminStorageService.getAdminToken();
       QuizApiService.deleteQuestion(questionId, token)
@@ -79,8 +79,7 @@ export default {
         });
     },
     addQuestion() {
-      // Rediriger vers la page d'ajout de question
-      // this.$router.push({ name: "AddQuestion" });
+       this.$router.push({ name: "AddQuestionPage" });
     },
     logout() {
       AdminStorageService.clearToken();
