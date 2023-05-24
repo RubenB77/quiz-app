@@ -125,6 +125,7 @@ def GetQuestionbyID(pId):
 def UpdQuestionByID(input,pId):
     db = sql.CreateConnection()
     db.execute(f"SELECT position FROM questions WHERE id = {pId}")
+    pos = db.fetchone()[0]
 
     db.execute("SELECT * FROM questions WHERE id=?", (pId,))
     data = db.fetchone()
@@ -269,50 +270,23 @@ def DeleteParticipations():
     database.execute("commit")
     database.close()
 
-def initialize_db():
-    db= sql.CreateConnection()
-    db.execute("""
-    CREATE TABLE IF NOT EXISTS questions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        position INTEGER  UNIQUE,
-        title TEXT ,
-        text TEXT ,
-        image TEXT
-    )
-    """)
-
-    db.execute("""
-    CREATE TABLE IF NOT EXISTS answers (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        idQuestion INTEGER ,
-        text TEXT,
-        isCorrect BOOLEAN
-    )
-    """)
-
-    db.execute("""
-    CREATE TABLE IF NOT EXISTS participations (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        playerName TEXT ,
-        answers TEXT ,
-        score INTEGER 
-    )
-    """)
-
-    db.close()
-
 def calculate_score(answers):
     database = sql.CreateConnection()
-    database.execute("SELECT * FROM questions ORDER BY position ")
+
+
+    database.execute("SELECT * FROM questions")
     questions = database.fetchall()
-    pos=0
+    id=0
     score =0
+
     for question in questions:
-        pos=pos+1
-        database.execute("SELECT * FROM answers WHERE idQuestion=?", (question[0],))
+        id=id+1
+        database.execute("SELECT * FROM answers WHERE idQuestion=?", (id,))
         fetchanswers =database.fetchall()
-        if fetchanswers[answers[pos-1]-1][3]==True:
+        print(fetchanswers[answers[id-1]-1][3])
+        if fetchanswers[answers[id-1]-1][3]==True:
             score = score+1
+            print(score)
     database.close()
     return score
 
@@ -323,12 +297,5 @@ def GetScores():
     response = []
     for participant in result :
         response.append({"playerName": participant[1],"score":participant[3]})
-    database.close()
-    return response
-
-def GetAllQuestions():
-    database = sql.CreateConnection()
-    database.execute("SELECT * FROM questions ORDER BY position ")
-    response = database.fetchall() 
     database.close()
     return response

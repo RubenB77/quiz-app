@@ -14,21 +14,11 @@ from question import (
     CreateParticipation,
     DeleteParticipations,
     GetScores,
-    GetAllQuestions,
-    initialize_db,
 )
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/rebuild-db', methods=['POST'])
-def rebuild_db():
-    if checkAuth():
-        initialize_db()
-        return 'Ok', 200
-    else:
-        return 'Unauthorized', 401
-    
 @app.route('/')
 def hello_world():
     return "Hello, world"
@@ -81,9 +71,7 @@ def GetQuestionCount():
 
 @app.route('/questions', methods=['GET'])
 def PosQestion():
-    
     position = request.args.get('position')
-    print(position)
     response = GetQuestionbyPosJSON(position)
     if response == None:
         return 'No question with this pos', 404
@@ -96,15 +84,6 @@ def DelAllQuestions():
         return 'All Questions Deleted', 204
     else:
         return 'Unauthorized', 401
-    
-@app.route('/questions/all', methods=['GET'])
-def GetallQuestions():
-    if checkAuth():
-        response = GetAllQuestions()
-        return response, 200
-    else:
-        return 'Unauthorized', 401
-
 
 @app.route('/questions/<questionId>', methods=['GET'])
 def GetQuestionById(questionId):
